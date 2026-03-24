@@ -1,10 +1,283 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <title>바이브코딩</title>
+<meta charset="UTF-8">
+<title>오늘의 기억</title>
+<link rel="manifest" href="./manifest.json">
+
+<style>
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(to bottom, #ffe6e6, #ffffff);
+  text-align: center;
+  padding: 40px;
+  font-size: 24px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: auto;
+}
+
+button {
+  background: #ff8a8a;
+  font-size: 22px;
+  padding: 18px;
+  width: 90%;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+input {
+  font-size: 22px;
+  padding: 12px;
+  width: 90%;
+  margin-top: 10px;
+}
+</style>
 </head>
+
 <body>
-  <h1>안녕하세요 😊</h1>
-  <p>내 첫 웹사이트 성공!</p>
+
+<h1>🧠 오늘의 기억</h1>
+<div class="card" id="game"></div>
+
+<script>
+// =====================
+// 공통
+// =====================
+let currentIndex = 0;
+let score = 0;
+
+// =====================
+// 레벨 시스템
+// =====================
+function getLevel(score) {
+  if (score >= 10) return "🔴 고급";
+  if (score >= 5) return "🟡 중급";
+  return "🟢 초급";
+}
+
+// =====================
+// 날짜 체크
+// =====================
+function getToday() {
+  return new Date().toISOString().split("T")[0];
+}
+
+// =====================
+// 메인 화면
+// =====================
+function showMain() {
+  let lastScore = localStorage.getItem("score") || 0;
+  let lastDate = localStorage.getItem("date");
+  let today = getToday();
+
+  let msg = "";
+  if (lastDate === today) {
+    msg = "✔ 오늘 이미 기록 완료!";
+  } else {
+    msg = "👉 오늘 게임을 시작하세요!";
+  }
+
+  let level = getLevel(lastScore);
+
+  document.getElementById("game").innerHTML = `
+    <p>지난 점수: ${lastScore}</p>
+    <p>현재 레벨: <b>${level}</b></p>
+    <p>${msg}</p>
+
+    <button onclick="startWordGame()">📝 단어 기억</button>
+    <button onclick="startNumberGame()">🔢 숫자 기억</button>
+    <button onclick="startImageGame()">🖼 이미지 기억</button>
+    <button onclick="showDailyTip()">💡 건강 미션</button>
+  `;
+}
+showMain();
+
+// =====================
+// 📝 단어 기억
+// =====================
+let words = ["사과","자동차","강아지","바다","커피","학교","전화","시장"];
+
+function startWordGame() {
+  currentIndex = 0;
+  score = 0;
+  nextWord();
+}
+
+function nextWord() {
+  if (currentIndex >= 5) return showResult();
+
+  let shuffled = [...words].sort(()=>0.5-Math.random()).slice(0,3);
+
+  document.getElementById("game").innerHTML = `
+    <p>단어 기억하세요 👇</p>
+    <h2>${shuffled.join(" , ")}</h2>
+  `;
+
+  setTimeout(()=>{
+    document.getElementById("game").innerHTML = `
+      <p>기억나는 단어 입력</p>
+      <input id="answer">
+      <button onclick='checkWord(${JSON.stringify(shuffled)})'>확인</button>
+    `;
+  },2000);
+}
+
+function checkWord(shuffled){
+  let input = document.getElementById("answer").value
+                .split(/[ ,]+/)
+                .filter((v, i, arr) => arr.indexOf(v) === i); // 중복 제거
+
+  input.forEach(a=>{
+    if(shuffled.includes(a)) score++;
+  });
+
+  currentIndex++;
+  nextWord();
+}
+
+// =====================
+// 🔢 숫자 기억
+// =====================
+let currentNumber = "";
+
+function startNumberGame() {
+  currentIndex = 0;
+  score = 0;
+  nextNumber();
+}
+
+function nextNumber() {
+  if (currentIndex >= 5) return showResult();
+
+  currentNumber = Math.floor(100 + Math.random()*900);
+
+  document.getElementById("game").innerHTML = `
+    <p>숫자를 기억하세요</p>
+    <h1>${currentNumber}</h1>
+  `;
+
+  setTimeout(()=>{
+    document.getElementById("game").innerHTML = `
+      <p>숫자를 입력하세요</p>
+      <input id="num">
+      <button onclick="checkNumber()">확인</button>
+    `;
+  },2000);
+}
+
+function checkNumber(){
+  let input = document.getElementById("num").value;
+
+  if(input == currentNumber) score++;
+
+  currentIndex++;
+  nextNumber();
+}
+
+// =====================
+// 🖼 이미지 기억
+// =====================
+let images = ["🍎","🚗","🐶","☕","🏥","✈️","🍕","🎈","🌸","📱"];
+
+let correctImage="";
+let options=[];
+
+function startImageGame(){
+  currentIndex=0;
+  score=0;
+  nextImage();
+}
+
+function nextImage(){
+  if(currentIndex>=5) return showResult();
+
+  options=[...images].sort(()=>0.5-Math.random()).slice(0,4);
+  correctImage=options[Math.floor(Math.random()*4)];
+
+  document.getElementById("game").innerHTML=`
+    <p>이 그림 기억하세요</p>
+    <h1>${correctImage}</h1>
+  `;
+
+  setTimeout(()=>{
+    document.getElementById("game").innerHTML=`
+      <p>맞는 그림 선택</p>
+      ${options.map(i=>`<button onclick="checkImage('${i}')">${i}</button>`).join("")}
+    `;
+  },1500);
+}
+
+function checkImage(i){
+  if(i===correctImage) score++;
+
+  currentIndex++;
+  nextImage();
+}
+
+// =====================
+// 결과 + 저장
+// =====================
+function showResult(){
+  let today = getToday();
+  let lastDate = localStorage.getItem("date");
+
+  if (lastDate !== today) {
+    localStorage.setItem("score", score);
+    localStorage.setItem("date", today);
+  }
+
+  let level = getLevel(score);
+
+  document.getElementById("game").innerHTML=`
+    <h2>🎉 결과</h2>
+    <p>${score} 점</p>
+    <p>현재 레벨: <b>${level}</b></p>
+    <button onclick="showMain()">처음으로</button>
+  `;
+
+  alert("수고했어요! 🎉");
+}
+
+// =====================
+// 건강 미션
+// =====================
+function showDailyTip(){
+  const tips=[
+    "물 5잔 마시기 💧",
+    "10분 산책 🚶‍♀️",
+    "단어 3개 외우기 📖"
+  ];
+
+  let t=tips[Math.floor(Math.random()*tips.length)];
+
+  document.getElementById("game").innerHTML=`
+    <h2>${t}</h2>
+    <button onclick="showMain()">돌아가기</button>
+  `;
+}
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('서비스워커 등록 완료'))
+    .catch((error) => console.log('등록 실패:', error));
+}
+</script>
+
 </body>
 </html>
