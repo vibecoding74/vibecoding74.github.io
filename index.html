@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>오늘의 기억</title>
 <link rel="manifest" href="./manifest.json">
 
@@ -10,58 +11,334 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background: linear-gradient(to bottom, #ffe6e6, #ffffff);
   text-align: center;
-  padding: 40px;
-  font-size: 24px;
+  padding: 20px;
+  font-size: 20px;
+  margin: 0;
 }
 
 h1 {
   font-size: 32px;
+  margin-bottom: 15px;
 }
 
 .card {
   background: white;
-  padding: 40px;
+  padding: 28px 18px;
   border-radius: 25px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  max-width: 500px;
+  max-width: 700px;
   margin: auto;
 }
 
 button {
   background: #ff8a8a;
-  font-size: 22px;
-  padding: 18px;
+  font-size: 19px;
+  padding: 14px;
   width: 90%;
   border: none;
   border-radius: 15px;
   color: white;
-  margin-top: 15px;
+  margin-top: 12px;
   cursor: pointer;
 }
 
+button:hover {
+  background: #ff6f6f;
+}
+
 input {
-  font-size: 22px;
+  font-size: 19px;
   padding: 12px;
   width: 90%;
   margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.info-box {
+  background: #fff4f4;
+  border-radius: 18px;
+  padding: 12px;
+  margin-bottom: 15px;
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.status-item {
+  flex: 1;
+  min-width: 120px;
+  background: #fff8f8;
+  padding: 10px;
+  border-radius: 14px;
+  font-size: 17px;
+}
+
+.timer {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff5c5c;
+  margin-top: 12px;
+}
+
+.life {
+  font-size: 24px;
+}
+
+.result-text {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.sub-text {
+  font-size: 17px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.memory-words {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff6f6f;
+  margin-top: 15px;
+  line-height: 1.7;
+}
+
+.level-buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.small-btn {
+  width: 100%;
+}
+
+.game-over-box {
+  background: #fff0f0;
+  border: 2px solid #ffb3b3;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+/* 이미지 카드 게임 */
+.memory-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.grid-4 {
+  grid-template-columns: repeat(2, 90px);
+}
+
+.grid-6 {
+  grid-template-columns: repeat(3, 90px);
+}
+
+.grid-8 {
+  grid-template-columns: repeat(4, 78px);
+}
+
+.memory-card {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  background: #ffe4e4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.grid-8 .memory-card {
+  width: 78px;
+  height: 78px;
+  font-size: 34px;
+}
+
+.memory-card.back {
+  background: #ff8a8a;
+  color: white;
+  font-size: 30px;
+}
+
+.memory-card.matched {
+  background: #ffd6d6;
+  opacity: 0.6;
+  cursor: default;
+}
+
+.target-box {
+  background: #fff4f4;
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 18px;
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .card {
+    padding: 24px 14px;
+  }
+
+  button,
+  input {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .memory-words {
+    font-size: 24px;
+  }
+
+  .grid-8 {
+    grid-template-columns: repeat(4, 68px);
+  }
+
+  .grid-8 .memory-card {
+    width: 68px;
+    height: 68px;
+    font-size: 30px;
+  }
+
+  .grid-6 {
+    grid-template-columns: repeat(3, 78px);
+  }
+
+  .grid-6 .memory-card {
+    width: 78px;
+    height: 78px;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 90px);
+  }
 }
 </style>
 </head>
 
 <body>
-
 <h1>🧠 오늘의 기억</h1>
 <div class="card" id="game"></div>
 
 <script>
 // =====================
-// 공통
+// 공통 변수
 // =====================
 let currentIndex = 0;
 let score = 0;
+let lives = 3;
+let currentGameType = "";
+let currentDifficulty = "";
+let timer = null;
+let timeLeft = 5;
+let currentNumber = "";
+let imagePairs = [];
+let revealedCards = [];
+let matchedCount = 0;
+let targetEmoji = "";
 
 // =====================
-// 레벨 시스템
+// 데이터
+// =====================
+const wordLevels = {
+  easy: {
+    label: "초급",
+    showTime: 2500,
+    rounds: 5,
+    wordsPerRound: 3,
+    minCorrect: 2,
+    words: ["사과","바다","강아지","커피","시장","학교","전화","토끼","의자","꽃"]
+  },
+  medium: {
+    label: "중급",
+    showTime: 2200,
+    rounds: 5,
+    wordsPerRound: 4,
+    minCorrect: 3,
+    words: ["비행기","자동차","병원","냉장고","초콜릿","해바라기","연필통","도서관","소풍","우산"]
+  },
+  hard: {
+    label: "고급",
+    showTime: 2000,
+    rounds: 5,
+    wordsPerRound: 5,
+    minCorrect: 4,
+    words: ["엘리베이터","아이스크림","운동화","현미경","박물관","자전거","피아노","손전등","소화기","스케치북"]
+  }
+};
+
+const numberLevels = {
+  easy: {
+    label: "초급",
+    showTime: 2200,
+    rounds: 5,
+    digits: 3
+  },
+  medium: {
+    label: "중급",
+    showTime: 2000,
+    rounds: 5,
+    digits: 4
+  },
+  hard: {
+    label: "고급",
+    showTime: 1700,
+    rounds: 5,
+    digits: 5
+  }
+};
+
+const imageLevels = {
+  easy: {
+    label: "초급",
+    pairCount: 2,
+    previewTime: 3000,
+    emojis: ["🍎","🐶","☕","🌸","🎈","🍕","📱","🚗","🍇","🧸"]
+  },
+  medium: {
+    label: "중급",
+    pairCount: 3,
+    previewTime: 2800,
+    emojis: ["🍎","🐶","☕","🌸","🎈","🍕","📱","🚗","🍇","🧸","🏀","🎵"]
+  },
+  hard: {
+    label: "고급",
+    pairCount: 4,
+    previewTime: 2500,
+    emojis: ["🍎","🐶","☕","🌸","🎈","🍕","📱","🚗","🍇","🧸","🏀","🎵","✈️","🏥","🎁","⭐"]
+  }
+};
+
+// =====================
+// 기본 기능
 // =====================
 function getLevel(score) {
   if (score >= 10) return "🔴 고급";
@@ -69,184 +346,421 @@ function getLevel(score) {
   return "🟢 초급";
 }
 
-// =====================
-// 날짜 체크
-// =====================
 function getToday() {
   return new Date().toISOString().split("T")[0];
+}
+
+function clearGameTimer() {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+}
+
+function startTimer(onTimeout) {
+  clearGameTimer();
+  timeLeft = 5;
+  updateTimerText();
+
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerText();
+
+    if (timeLeft <= 0) {
+      clearGameTimer();
+      loseLife("⏰ 시간 초과! 목숨 1개 차감");
+      onTimeout();
+    }
+  }, 1000);
+}
+
+function updateTimerText() {
+  const timerEl = document.getElementById("timer");
+  if (timerEl) {
+    timerEl.innerText = "⏳ 남은 시간: " + timeLeft + "초";
+  }
+}
+
+function getLifeIcons() {
+  return "❤️".repeat(lives) + "🖤".repeat(3 - lives);
+}
+
+function statusBox() {
+  return `
+    <div class="status-row">
+      <div class="status-item">점수: <b>${score}</b></div>
+      <div class="status-item">레벨: <b>${getLevel(score)}</b></div>
+      <div class="status-item">목숨: <span class="life">${getLifeIcons()}</span></div>
+    </div>
+  `;
+}
+
+function shuffleArray(arr) {
+  return [...arr].sort(() => 0.5 - Math.random());
 }
 
 // =====================
 // 메인 화면
 // =====================
 function showMain() {
-  let lastScore = localStorage.getItem("score") || 0;
-  let lastDate = localStorage.getItem("date");
-  let today = getToday();
+  clearGameTimer();
 
-  let msg = "";
-  if (lastDate === today) {
-    msg = "✔ 오늘 이미 기록 완료!";
-  } else {
-    msg = "👉 오늘 게임을 시작하세요!";
-  }
+  const lastScore = localStorage.getItem("score") || 0;
+  const bestScore = localStorage.getItem("bestScore") || 0;
+  const lastDate = localStorage.getItem("date");
+  const today = getToday();
 
-  let level = getLevel(lastScore);
+  let msg = lastDate === today ? "✔ 오늘 이미 기록 완료!" : "👉 오늘 게임을 시작하세요!";
 
   document.getElementById("game").innerHTML = `
-    <p>지난 점수: ${lastScore}</p>
-    <p>현재 레벨: <b>${level}</b></p>
-    <p>${msg}</p>
+    <div class="info-box">
+      <p>지난 점수: <b>${lastScore}</b></p>
+      <p>최고 점수: <b>${bestScore}</b></p>
+      <p>현재 레벨: <b>${getLevel(Number(lastScore))}</b></p>
+      <p>${msg}</p>
+    </div>
 
-    <button onclick="startWordGame()">📝 단어 기억</button>
-    <button onclick="startNumberGame()">🔢 숫자 기억</button>
-    <button onclick="startImageGame()">🖼 이미지 기억</button>
+    <button onclick="showDifficultyMenu('word')">📝 단어 기억</button>
+    <button onclick="showDifficultyMenu('number')">🔢 숫자 기억</button>
+    <button onclick="showDifficultyMenu('image')">🖼 이미지 기억</button>
     <button onclick="showDailyTip()">💡 건강 미션</button>
   `;
 }
 showMain();
 
 // =====================
-// 📝 단어 기억
+// 난이도 선택 화면
 // =====================
-let words = ["사과","자동차","강아지","바다","커피","학교","전화","시장"];
+function showDifficultyMenu(type) {
+  let title = "";
+  if (type === "word") title = "📝 단어 기억";
+  if (type === "number") title = "🔢 숫자 기억";
+  if (type === "image") title = "🖼 이미지 기억";
 
-function startWordGame() {
+  document.getElementById("game").innerHTML = `
+    <h2>${title}</h2>
+    <p>난이도를 선택하세요</p>
+    <div class="level-buttons">
+      <button class="small-btn" onclick="startSelectedGame('${type}','easy')">🟢 초급</button>
+      <button class="small-btn" onclick="startSelectedGame('${type}','medium')">🟡 중급</button>
+      <button class="small-btn" onclick="startSelectedGame('${type}','hard')">🔴 고급</button>
+    </div>
+    <button onclick="showMain()">🏠 처음으로</button>
+  `;
+}
+
+function resetGame(gameType, difficulty) {
+  clearGameTimer();
   currentIndex = 0;
   score = 0;
+  lives = 3;
+  currentGameType = gameType;
+  currentDifficulty = difficulty;
+}
+
+function startSelectedGame(type, difficulty) {
+  resetGame(type, difficulty);
+
+  if (type === "word") startWordGame();
+  if (type === "number") startNumberGame();
+  if (type === "image") startImageGame();
+}
+
+function loseLife(message) {
+  lives--;
+  if (message) alert(message);
+}
+
+function checkGameOver() {
+  if (lives <= 0) {
+    showGameOver();
+    return true;
+  }
+  return false;
+}
+
+function showGameOver() {
+  clearGameTimer();
+
+  document.getElementById("game").innerHTML = `
+    <div class="game-over-box">
+      <h2>💥 게임 오버</h2>
+      <p class="result-text">목숨을 모두 사용했어요</p>
+      <p>최종 점수: <b>${score}</b>점</p>
+      <p>도달 레벨: <b>${getLevel(score)}</b></p>
+      <button onclick="restartSameGame()">🔁 같은 게임 다시하기</button>
+      <button onclick="showDifficultyMenu('${currentGameType}')">📚 난이도 다시 선택</button>
+      <button onclick="showMain()">🏠 처음으로</button>
+    </div>
+  `;
+}
+
+function restartSameGame() {
+  startSelectedGame(currentGameType, currentDifficulty);
+}
+
+// =====================
+// 단어 기억
+// =====================
+function startWordGame() {
   nextWord();
 }
 
 function nextWord() {
-  if (currentIndex >= 5) return showResult();
+  if (checkGameOver()) return;
 
-  let shuffled = [...words].sort(()=>0.5-Math.random()).slice(0,3);
+  const config = wordLevels[currentDifficulty];
+  if (currentIndex >= config.rounds) return showResult();
+
+  const selectedWords = shuffleArray(config.words).slice(0, config.wordsPerRound);
 
   document.getElementById("game").innerHTML = `
-    <p>단어 기억하세요 👇</p>
-    <h2>${shuffled.join(" , ")}</h2>
+    ${statusBox()}
+    <p>📝 단어 기억 - <b>${config.label}</b></p>
+    <p>아래 단어를 기억하세요</p>
+    <div class="memory-words">${selectedWords.join(" , ")}</div>
+    <p class="sub-text">${config.showTime / 1000}초 뒤 입력 화면으로 넘어갑니다</p>
   `;
 
-  setTimeout(()=>{
+  setTimeout(() => {
+    if (lives <= 0) return;
+
     document.getElementById("game").innerHTML = `
-      <p>기억나는 단어 입력</p>
-      <input id="answer">
-      <button onclick='checkWord(${JSON.stringify(shuffled)})'>확인</button>
+      ${statusBox()}
+      <p>기억나는 단어를 입력하세요</p>
+      <p class="sub-text">쉼표 또는 띄어쓰기로 구분해서 입력하세요</p>
+      <div id="timer" class="timer">⏳ 남은 시간: 5초</div>
+      <input id="answer" placeholder="예: 사과 바다 커피">
+      <button onclick='checkWord(${JSON.stringify(selectedWords)})'>확인</button>
     `;
-  },2000);
+
+    startTimer(() => {
+      currentIndex++;
+      if (!checkGameOver()) nextWord();
+    });
+  }, config.showTime);
 }
 
-function checkWord(shuffled){
-  let input = document.getElementById("answer").value
-                .split(/[ ,]+/)
-                .filter((v, i, arr) => arr.indexOf(v) === i); // 중복 제거
+function checkWord(selectedWords) {
+  clearGameTimer();
 
-  input.forEach(a=>{
-    if(shuffled.includes(a)) score++;
+  const config = wordLevels[currentDifficulty];
+  const input = document.getElementById("answer").value
+    .trim()
+    .split(/[ ,]+/)
+    .filter(v => v !== "");
+
+  const uniqueInput = [...new Set(input)];
+  let correctCount = 0;
+
+  uniqueInput.forEach(word => {
+    if (selectedWords.includes(word)) correctCount++;
   });
 
+  if (correctCount >= config.minCorrect) {
+    score++;
+    alert(`✅ 정답! ${correctCount}개 맞춤`);
+  } else {
+    loseLife(`❌ 틀렸어요! ${config.minCorrect}개 이상 맞춰야 해요`);
+  }
+
   currentIndex++;
-  nextWord();
+  if (!checkGameOver()) nextWord();
 }
 
 // =====================
-// 🔢 숫자 기억
+// 숫자 기억
 // =====================
-let currentNumber = "";
-
 function startNumberGame() {
-  currentIndex = 0;
-  score = 0;
   nextNumber();
+}
+
+function makeRandomNumber(digits) {
+  let result = "";
+  for (let i = 0; i < digits; i++) {
+    const num = Math.floor(Math.random() * 10);
+    if (i === 0 && num === 0) {
+      result += Math.floor(Math.random() * 9) + 1;
+    } else {
+      result += num;
+    }
+  }
+  return result;
 }
 
 function nextNumber() {
-  if (currentIndex >= 5) return showResult();
+  if (checkGameOver()) return;
 
-  currentNumber = Math.floor(100 + Math.random()*900);
+  const config = numberLevels[currentDifficulty];
+  if (currentIndex >= config.rounds) return showResult();
+
+  currentNumber = makeRandomNumber(config.digits);
 
   document.getElementById("game").innerHTML = `
+    ${statusBox()}
+    <p>🔢 숫자 기억 - <b>${config.label}</b></p>
     <p>숫자를 기억하세요</p>
-    <h1>${currentNumber}</h1>
+    <div class="memory-words">${currentNumber}</div>
+    <p class="sub-text">${config.showTime / 1000}초 뒤 입력 화면으로 넘어갑니다</p>
   `;
 
-  setTimeout(()=>{
+  setTimeout(() => {
+    if (lives <= 0) return;
+
     document.getElementById("game").innerHTML = `
-      <p>숫자를 입력하세요</p>
-      <input id="num">
+      ${statusBox()}
+      <p>방금 본 숫자를 입력하세요</p>
+      <div id="timer" class="timer">⏳ 남은 시간: 5초</div>
+      <input id="num" placeholder="숫자를 입력하세요">
       <button onclick="checkNumber()">확인</button>
     `;
-  },2000);
+
+    startTimer(() => {
+      currentIndex++;
+      if (!checkGameOver()) nextNumber();
+    });
+  }, config.showTime);
 }
 
-function checkNumber(){
-  let input = document.getElementById("num").value;
+function checkNumber() {
+  clearGameTimer();
 
-  if(input == currentNumber) score++;
+  const input = document.getElementById("num").value.trim();
+
+  if (input === currentNumber) {
+    score++;
+    alert("✅ 정답!");
+  } else {
+    loseLife(`❌ 틀렸어요! 정답은 ${currentNumber}`);
+  }
 
   currentIndex++;
-  nextNumber();
+  if (!checkGameOver()) nextNumber();
 }
 
 // =====================
-// 🖼 이미지 기억
+// 이미지 기억 - 카드 뒤집기
 // =====================
-let images = ["🍎","🚗","🐶","☕","🏥","✈️","🍕","🎈","🌸","📱"];
-
-let correctImage="";
-let options=[];
-
-function startImageGame(){
-  currentIndex=0;
-  score=0;
-  nextImage();
+function startImageGame() {
+  nextImageRound();
 }
 
-function nextImage(){
-  if(currentIndex>=5) return showResult();
+function getGridClass(cardCount) {
+  if (cardCount === 4) return "grid-4";
+  if (cardCount === 6) return "grid-6";
+  return "grid-8";
+}
 
-  options=[...images].sort(()=>0.5-Math.random()).slice(0,4);
-  correctImage=options[Math.floor(Math.random()*4)];
+function nextImageRound() {
+  if (checkGameOver()) return;
 
-  document.getElementById("game").innerHTML=`
-    <p>이 그림 기억하세요</p>
-    <h1>${correctImage}</h1>
+  const config = imageLevels[currentDifficulty];
+  if (currentIndex >= 5) return showResult();
+
+  const selected = shuffleArray(config.emojis).slice(0, config.pairCount);
+  imagePairs = shuffleArray([...selected, ...selected]);
+  revealedCards = new Array(imagePairs.length).fill(false);
+  matchedCount = 0;
+  targetEmoji = selected[Math.floor(Math.random() * selected.length)];
+
+  document.getElementById("game").innerHTML = `
+    ${statusBox()}
+    <p>🖼 이미지 기억 - <b>${config.label}</b></p>
+    <p>카드를 잘 기억하세요</p>
+    <div class="target-box">찾아야 할 그림: ${targetEmoji}</div>
+    <div class="memory-grid ${getGridClass(imagePairs.length)}">
+      ${imagePairs.map(emoji => `<div class="memory-card">${emoji}</div>`).join("")}
+    </div>
+    <p class="sub-text">${config.previewTime / 1000}초 뒤 카드가 뒤집힙니다</p>
   `;
 
-  setTimeout(()=>{
-    document.getElementById("game").innerHTML=`
-      <p>맞는 그림 선택</p>
-      ${options.map(i=>`<button onclick="checkImage('${i}')">${i}</button>`).join("")}
-    `;
-  },1500);
+  setTimeout(() => {
+    if (lives <= 0) return;
+    renderImageBoard(true);
+    startTimer(() => {
+      currentIndex++;
+      if (!checkGameOver()) nextImageRound();
+    });
+  }, config.previewTime);
 }
 
-function checkImage(i){
-  if(i===correctImage) score++;
+function renderImageBoard(hidden) {
+  document.getElementById("game").innerHTML = `
+    ${statusBox()}
+    <p>같은 그림 2장을 찾아보세요</p>
+    <div class="target-box">찾아야 할 그림: ${targetEmoji}</div>
+    <div id="timer" class="timer">⏳ 남은 시간: ${timeLeft}초</div>
+    <div class="memory-grid ${getGridClass(imagePairs.length)}">
+      ${imagePairs.map((emoji, index) => {
+        const isRevealed = revealedCards[index];
+        const isMatched = isRevealed && emoji === targetEmoji;
+        if (!hidden || isRevealed) {
+          return `<div class="memory-card ${isMatched ? 'matched' : ''}" onclick="selectImageCard(${index})">${emoji}</div>`;
+        } else {
+          return `<div class="memory-card back" onclick="selectImageCard(${index})">?</div>`;
+        }
+      }).join("")}
+    </div>
+    <p class="sub-text">같은 그림 2장을 모두 찾으면 성공!</p>
+  `;
+}
 
-  currentIndex++;
-  nextImage();
+function selectImageCard(index) {
+  if (revealedCards[index]) return;
+
+  revealedCards[index] = true;
+  renderImageBoard(true);
+
+  if (imagePairs[index] === targetEmoji) {
+    matchedCount++;
+  } else {
+    loseLife("❌ 다른 그림이에요! 목숨 1개 차감");
+    currentIndex++;
+    clearGameTimer();
+    if (!checkGameOver()) {
+      setTimeout(() => nextImageRound(), 400);
+    }
+    return;
+  }
+
+  if (matchedCount === 2) {
+    clearGameTimer();
+    score++;
+    alert("✅ 성공! 같은 그림 2장을 찾았어요");
+    currentIndex++;
+    if (!checkGameOver()) {
+      setTimeout(() => nextImageRound(), 400);
+    }
+  }
 }
 
 // =====================
-// 결과 + 저장
+// 결과
 // =====================
-function showResult(){
-  let today = getToday();
-  let lastDate = localStorage.getItem("date");
+function showResult() {
+  clearGameTimer();
+
+  const today = getToday();
+  const lastDate = localStorage.getItem("date");
+  const bestScore = Number(localStorage.getItem("bestScore") || 0);
+
+  if (score > bestScore) {
+    localStorage.setItem("bestScore", score);
+  }
 
   if (lastDate !== today) {
     localStorage.setItem("score", score);
     localStorage.setItem("date", today);
   }
 
-  let level = getLevel(score);
-
-  document.getElementById("game").innerHTML=`
+  document.getElementById("game").innerHTML = `
     <h2>🎉 결과</h2>
-    <p>${score} 점</p>
-    <p>현재 레벨: <b>${level}</b></p>
-    <button onclick="showMain()">처음으로</button>
+    <p class="result-text">${score} 점</p>
+    <p>현재 레벨: <b>${getLevel(score)}</b></p>
+    <p>남은 목숨: <span class="life">${getLifeIcons()}</span></p>
+    <button onclick="restartSameGame()">🔁 같은 게임 다시하기</button>
+    <button onclick="showDifficultyMenu('${currentGameType}')">📚 난이도 다시 선택</button>
+    <button onclick="showMain()">🏠 처음으로</button>
   `;
 
   alert("수고했어요! 🎉");
@@ -255,16 +769,20 @@ function showResult(){
 // =====================
 // 건강 미션
 // =====================
-function showDailyTip(){
-  const tips=[
+function showDailyTip() {
+  clearGameTimer();
+
+  const tips = [
     "물 5잔 마시기 💧",
     "10분 산책 🚶‍♀️",
-    "단어 3개 외우기 📖"
+    "단어 3개 외우기 📖",
+    "심호흡 5번 하기 🌿",
+    "스트레칭 3분 하기 🧘"
   ];
 
-  let t=tips[Math.floor(Math.random()*tips.length)];
+  const t = tips[Math.floor(Math.random() * tips.length)];
 
-  document.getElementById("game").innerHTML=`
+  document.getElementById("game").innerHTML = `
     <h2>${t}</h2>
     <button onclick="showMain()">돌아가기</button>
   `;
@@ -278,6 +796,5 @@ if ('serviceWorker' in navigator) {
     .catch((error) => console.log('등록 실패:', error));
 }
 </script>
-
 </body>
 </html>
